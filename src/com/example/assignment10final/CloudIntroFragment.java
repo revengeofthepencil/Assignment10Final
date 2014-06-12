@@ -15,9 +15,13 @@ import com.example.assignment10final.util.WundergroundReader;
 
 public class CloudIntroFragment extends Fragment {
 	
-	// test coords for Seattle
+	// test coords 
 	private static final double[] COORDS_TEST = 
-			new double[]{47.605876, -122.321718};
+			new double[]{37.764207, -122.469143};
+	
+	// NOLA: 29.917758,-90.113994
+	// Seattle: 47.605876, -122.321718
+	// San Francisco: 37.764207, -122.469143
 	
 	private ConditionInfo conditionInfo;
 	
@@ -41,7 +45,35 @@ public class CloudIntroFragment extends Fragment {
 				R.id.textview_intro);
 
 		if (textView != null) {
-			textView.setText("Ran at " + new Date());
+			StringBuilder conditionSB = new StringBuilder();
+			
+			if (conditionInfo.getLocation() != null) {
+				conditionSB.append("Location: " 
+						+ conditionInfo.getLocation() + "\n");
+			}
+			
+			if (conditionInfo.getTemperature() != null) {
+				conditionSB.append("Temperature: " 
+						+ conditionInfo.getTemperature() + "\n");
+			}
+			
+
+			if (conditionInfo.getConditions() != null) {
+				conditionSB.append("Conditions: " 
+						+ conditionInfo.getConditions() + "\n");
+			}
+			
+			if (conditionInfo.getHumidity() != null) {
+				conditionSB.append("Humidity: " 
+						+ conditionInfo.getHumidity() + "\n");
+			}
+			
+			if (conditionInfo.getWind() != null) {
+				conditionSB.append("Wind: " 
+						+ conditionInfo.getWind() + "\n");
+			}
+
+			textView.setText(conditionSB.toString());
 		}
 	}
 	private void initText(View view) {
