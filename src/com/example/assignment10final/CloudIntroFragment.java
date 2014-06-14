@@ -3,13 +3,11 @@ package com.example.assignment10final;
 import java.util.Date;
 
 import android.content.Context;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,11 +20,6 @@ import com.example.assignment10final.util.CloudConstants;
 import com.example.assignment10final.util.WundergroundReader;
 
 public class CloudIntroFragment extends Fragment  {
-
-	// test coords
-	private static final double[] COORDS_TEST = new double[] { 47.605876,
-			-122.321718 };
-
 
 	// NOLA: 29.917758,-90.113994
 	// Seattle: 47.605876, -122.321718
