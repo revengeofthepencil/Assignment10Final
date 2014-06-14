@@ -19,7 +19,7 @@ import com.example.assignment10final.model.ConditionInfo;
 import com.example.assignment10final.util.CloudConstants;
 import com.example.assignment10final.util.WundergroundReader;
 
-public class CloudIntroFragment extends Fragment  {
+public class CloudDetailFragment extends Fragment {
 
 	// NOLA: 29.917758,-90.113994
 	// Seattle: 47.605876, -122.321718
@@ -33,7 +33,7 @@ public class CloudIntroFragment extends Fragment  {
 
 		
 		
-		View view = inflater.inflate(R.layout.fragment_cloud_intro, container,
+		View view = inflater.inflate(R.layout.fragment_cloud_list, container,
 				false);
 		// new WundergroundReader().fetchConditions(COORDS_TEST);
 		new FetchConditionsTask(getActivity()).execute();
@@ -48,7 +48,7 @@ public class CloudIntroFragment extends Fragment  {
 		}
 
 		TextView textView = (TextView) getActivity().findViewById(
-				R.id.textview_intro);
+				R.id.textview_conditions);
 
 		if (textView != null) {
 			StringBuilder conditionSB = new StringBuilder();
@@ -82,7 +82,8 @@ public class CloudIntroFragment extends Fragment  {
 	}
 
 	private void initText(View view) {
-		TextView textView = (TextView) view.findViewById(R.id.textview_intro);
+		TextView textView = (TextView) view.findViewById(
+				R.id.textview_cloud_sighting_info);
 		Date now = new Date();
 		textView.setText("it is now " + now);
 	}

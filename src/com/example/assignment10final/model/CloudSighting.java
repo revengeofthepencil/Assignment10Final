@@ -2,6 +2,11 @@ package com.example.assignment10final.model;
 
 import java.util.Date;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.example.assignment10final.util.CloudConstants;
+
 public class CloudSighting {
 
 	private Date date;
@@ -16,6 +21,11 @@ public class CloudSighting {
 		this.cloudImage = cloudImage;
 		this.conditionInfo = conditionInfo;
 	}
+	
+	public CloudSighting(JSONObject jsonObject) throws JSONException {
+		// TODO: serialize
+	}
+	
 	public Date getDate() {
 		return date;
 	}
@@ -39,6 +49,17 @@ public class CloudSighting {
 	}
 	public void setConditionInfo(ConditionInfo conditionInfo) {
 		this.conditionInfo = conditionInfo;
+	}
+	
+	public JSONObject toJSON() throws JSONException {
+		// TODO: serialize
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		return getConditionInfo().getLocation() + ", " 
+				+ CloudConstants.FORMATTER.format(getDate());
 	}
 	
 }

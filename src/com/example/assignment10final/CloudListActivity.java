@@ -2,11 +2,11 @@ package com.example.assignment10final;
 
 import android.support.v4.app.Fragment;
 
-public class CloudIntroActivity extends SingleFragmentActivity {
+public class CloudListActivity extends SingleFragmentActivity {
 
 	@Override
 	protected Fragment createFragment() {
-		return new CloudIntroFragment();
+		return new CloudListFragment();
 	}
 
 }

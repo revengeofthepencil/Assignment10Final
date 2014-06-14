@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/textview_list_summary"
+        style="@style/base_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:text="@string/how_to" />
+
+    <!--  note: we're providing a pretty hefty margin here so the 
+    last itme doesn't get swallowed up by the delete button when we 
+    have to scroll -->
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_marginTop="5dp"
+		android:layout_marginBottom="65dp"
+        android:layout_below="@+id/textview_list_summary"
+        android:layout_centerHorizontal="true" >
+
+    </ListView>
+
+    <Button
+        android:id="@+id/button_delete_selected"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/delete_sighting" />
+    
+</RelativeLayout>

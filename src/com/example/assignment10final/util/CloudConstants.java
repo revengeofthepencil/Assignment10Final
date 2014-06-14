@@ -1,7 +1,8 @@
 package com.example.assignment10final.util;
 
-import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
+
+import android.annotation.SuppressLint;
 
 @SuppressLint("SimpleDateFormat")
 public class CloudConstants {
@@ -9,7 +10,7 @@ public class CloudConstants {
 	public static final String LOG_KEY = "cloud_log";
 	public static final SimpleDateFormat FORMATTER = 
 			new SimpleDateFormat("MMM d, yyyy hh:mm a");
-
+	public static final String EXTRA_CLOUD_SIGHTING_ID = "cloud_sighting_id";
 	public static final String URL_JSON_CONTENT_TYPE = "application/json";
 	
 	// JSON keys for serializing records
