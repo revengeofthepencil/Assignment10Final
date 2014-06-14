@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.assignment10final.model.CloudSighting;
+import com.example.assignment10final.model.CloudSightingCollection;
 import com.example.assignment10final.model.ConditionInfo;
 import com.example.assignment10final.util.CloudConstants;
 import com.example.assignment10final.util.WundergroundReader;
@@ -25,19 +27,36 @@ public class CloudDetailFragment extends Fragment {
 	// Seattle: 47.605876, -122.321718
 	// San Francisco: 37.764207, -122.469143
 
+	private CloudSighting cloudSighting;
 	private ConditionInfo conditionInfo;
+	private int id;
 
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		id = getActivity().getIntent().getIntExtra(
+				CloudConstants.EXTRA_CLOUD_SIGHTING_ID, 0);
+
+		if(id < 0) {
+			cloudSighting = new CloudSighting(new Date());
+			Log.i(CloudConstants.LOG_KEY, "in onCreate with id = " + id + "new alien");
+		} else {
+			cloudSighting = CloudSightingCollection.getInstance(getActivity())
+					.getCloudSightings().get(id);
+			Log.i(CloudConstants.LOG_KEY, "in onCreate with id = " + id + ", alien location = "
+					 + cloudSighting.getDate());
+		}
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-
 		
-		
-		View view = inflater.inflate(R.layout.fragment_cloud_list, container,
+		View view = inflater.inflate(R.layout.fragment_cloud_detail, container,
 				false);
-		// new WundergroundReader().fetchConditions(COORDS_TEST);
 		new FetchConditionsTask(getActivity()).execute();
-		initText(view);
+		initDateView(view);
 		return view;
 	}
 
@@ -81,11 +100,11 @@ public class CloudDetailFragment extends Fragment {
 		}
 	}
 
-	private void initText(View view) {
+	private void initDateView(View view) {
 		TextView textView = (TextView) view.findViewById(
-				R.id.textview_cloud_sighting_info);
-		Date now = new Date();
-		textView.setText("it is now " + now);
+				R.id.textview_sighting_date);
+		textView.setText(CloudConstants.FORMATTER
+				.format(cloudSighting.getDate()));
 	}
 
 	

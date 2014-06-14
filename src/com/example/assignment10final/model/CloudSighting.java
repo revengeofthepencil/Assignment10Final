@@ -13,6 +13,12 @@ public class CloudSighting {
 	private String description;
 	private String cloudImage;
 	private ConditionInfo conditionInfo;
+	
+	public CloudSighting(Date date) {
+		super();
+		this.date = date;
+	}
+
 	public CloudSighting(Date date, String description, String cloudImage,
 			ConditionInfo conditionInfo) {
 		super();

@@ -7,4 +7,5 @@
     <string name="title_activity_cloud_detail">CloudDetailActivity</string>
     <string name="how_to">How to</string>
     <string name="delete_sighting">Delete Sighting</string>
+    <string name="fetching_conditions">Fetching Current Conditions</string>
 </resources>
