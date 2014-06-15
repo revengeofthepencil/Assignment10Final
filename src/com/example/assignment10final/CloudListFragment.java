@@ -1,6 +1,8 @@
 package com.example.assignment10final;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -10,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,9 +20,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.assignment10final.model.CloudSighting;
@@ -42,6 +47,62 @@ public class CloudListFragment extends ListFragment {
 		ArrayAdapter<CloudSighting> adapter = new CloudSightingAdapter(
 				cloudSightings);
 		setListAdapter(adapter);
+	}
+	
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_cloud_list,
+				container, false);
+		ListView listView = (ListView)view.findViewById(android.R.id.list);
+		registerForContextMenu(listView);
+		initDeleteButton(view);
+		return view;
+	}
+
+
+	
+	private void initDeleteButton(final View view) {
+		Button deleteButton = (Button) view.findViewById(R.id.button_delete_selected);
+		final CloudSightingAdapter adapter = 
+				(CloudSightingAdapter) getListAdapter();
+		
+		
+		deleteButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				
+				if (!checkedPositions.isEmpty()) {
+					// TODO: it's sort of awkward to maintain a separate list,
+					// but I'm running into concurrent modification issues
+					// otherwise
+					List<CloudSighting> sightingsToDrop = 
+							new ArrayList<CloudSighting>();
+				    Iterator<Integer> checkedPositionIterator = 
+				    		checkedPositions.iterator();
+	                while (checkedPositionIterator.hasNext()) {
+	                	int position = checkedPositionIterator.next();
+						
+						if (cloudSightings.size() > position) {
+							sightingsToDrop.add(cloudSightings.get(position));
+						}
+						checkedPositionIterator.remove();
+	                }
+					
+	                if (sightingsToDrop.size() > 0) {
+						for (CloudSighting dropSighting : sightingsToDrop) {
+							CloudSightingCollection.deleteCloudSighting(
+									dropSighting);
+						}
+	                }
+
+	                // save the state of the sighting list back to the file
+	                CloudSightingCollection.getInstance(getActivity()).saveCloudSightings();
+					adapter.notifyDataSetChanged();
+				}
+
+			}
+		});
 	}
 	
 	
