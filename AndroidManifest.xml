@@ -10,7 +10,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
+    <uses-feature android:name="android.hardware.camera" />
     <uses-feature
         android:name="android.hardware.location.gps"
         android:required="true" />
@@ -40,6 +42,10 @@
         <activity
             android:name="com.example.assignment10final.CloudDetailActivity"
             android:label="@string/title_activity_cloud_detail" >
+        </activity>
+        <activity
+            android:name="com.example.assignment10final.CameraActivity"
+            android:label="@string/title_activity_camera" >
         </activity>
     </application>
 

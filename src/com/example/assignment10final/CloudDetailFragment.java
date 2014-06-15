@@ -1,8 +1,11 @@
 package com.example.assignment10final;
 
+import java.io.File;
 import java.util.Date;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -13,7 +16,9 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,6 +41,8 @@ public class CloudDetailFragment extends Fragment {
 	private ConditionInfo conditionInfo;
 	private int id;
 	private View view;
+	public static final int REQUEST_PHOTO = 1;
+
 
 	public static CloudDetailFragment newInstance(int id) {
 		Bundle args = new Bundle();
@@ -87,10 +94,28 @@ public class CloudDetailFragment extends Fragment {
 	}
 	
 	
-	
-	private void initChangeImageButton() {
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if (resultCode != Activity.RESULT_OK) {
+			return;
+		}
+		
+		if (requestCode == REQUEST_PHOTO) {
+			String imageName = data.getStringExtra(CloudConstants.EXTRA_NEW_IMAGE_NAME);
+			
+			// if the image name is not null, use it for the sighting
+			if (imageName != null) {
+				replaceImageForSighting(cloudSighting, imageName);
+			}
+			
+			initSightingImage();
+		}
 		
 	}
+	
 	
 	private void initDescText() {
 		EditText descEditText = (EditText)view
@@ -101,6 +126,21 @@ public class CloudDetailFragment extends Fragment {
 		}
 
 	}
+
+	public void initChangeImageButton() {
+		Button launchCameraButton = (Button) view.findViewById(R.id.button_launch_camera);
+		launchCameraButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), CameraActivity.class);
+				startActivityForResult(intent, REQUEST_PHOTO);
+
+			}
+		});
+
+	}
+
+	
 	
 	private void initSightingImage() {
 		ImageView imageView = (ImageView) view.findViewById(R.id.imageview_cloud_picture);
@@ -120,7 +160,6 @@ public class CloudDetailFragment extends Fragment {
 			return;
 		}
 
-		
 		TextView textView = (TextView) view.findViewById(
 				R.id.textview_conditions);
 
@@ -235,9 +274,16 @@ public class CloudDetailFragment extends Fragment {
 		protected ConditionInfo doInBackground(Void... params) {
 			// hold up while we wait for updates
 			Log.i(CloudConstants.LOG_KEY, "Waiting for coords in doInBackground");
-			/*
-			 * 
-
+			
+			
+			// TODO: this is too damn slow - we need a way to enter coords outside of this screen
+			if (this.location == null) {
+				this.location = new Location("");
+				this.location.setLatitude(47.605876);
+				this.location.setLongitude(-122.321718);				
+			}
+			
+			// wait for location updates
 			while(this.location == null) {
 			}
 			
@@ -248,8 +294,6 @@ public class CloudDetailFragment extends Fragment {
 							this.location.getLongitude()}
 					);
 			
-			 */
-			return new WundergroundReader().fetchConditions("98122");
 		}
 
 		@Override
@@ -299,6 +343,30 @@ public class CloudDetailFragment extends Fragment {
 
 		imageView.setImageDrawable(bmDrawable);			
 		return true;
+	}
+
+	/**
+	 * Set a new image for the CloudSighting after deleting any existing image
+	 * from disk - this should keep us from filling up the drive with old
+	 * images. It would probably be better to assign each sighting object a
+	 * unique ID and use that id as the image name, but I'm running out of time
+	 * on this assignment.
+	 * 
+	 * @param sighting
+	 * @param imagePath
+	 */
+	private void replaceImageForSighting(CloudSighting sighting, String imagePath) {
+		if (sighting.getCloudImage() != null) {
+			
+			File existingImage = getActivity().getFileStreamPath(
+					sighting.getCloudImage());
+			if (existingImage != null && existingImage.exists()) {
+				existingImage.delete();
+			}
+		}
+		
+		// now that we've dumped the old image, set the new one
+		sighting.setCloudImage(imagePath);
 	}
 
 }

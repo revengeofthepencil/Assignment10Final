@@ -1,5 +1,8 @@
 package com.example.assignment10final.util;
 
+import java.util.Date;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -123,4 +126,30 @@ public class PictureUtils {
 		b.getBitmap().recycle();
 		imageView.setImageDrawable(null);
 	}
+	
+
+	/**
+	 * Use the sightings location and a date stamp to generate a unique image
+	 * name. This should give us a unique image as long as we don't try for two
+	 * from the same location in the same millisecond. That's a chance I'm
+	 * willing to take.
+	 * 
+	 * @param sightingLocation
+	 * @return a unique string for the sighting image
+	 */
+	@SuppressLint("DefaultLocale")
+	public static String getUniqueImageNameForLocation(String sightingLocation) {
+		Date now = new Date();
+
+		if (sightingLocation != null) {
+			// strip any non alphanumeric characters
+			return sightingLocation.replaceAll("[^A-Za-z0-9]", "").toLowerCase()
+					+ '_' + now.getTime() 
+					+ ".jpg";
+			
+		} else {
+			return now.getTime() + ".jpg";
+			
+		}
+	}	
 }

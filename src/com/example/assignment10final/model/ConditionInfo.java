@@ -44,9 +44,9 @@ public class ConditionInfo {
 					.getString(CloudConstants.JSON_CLOUD_WIND);
 		}
 		
-		if (jsonObject.has(CloudConstants.JSON_CLOUD_COORDS)) {
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_READING_COORDS)) {
 			JSONArray locationCoords = (JSONArray) jsonObject
-					.get(CloudConstants.JSON_CLOUD_COORDS);
+					.get(CloudConstants.JSON_CLOUD_READING_COORDS);
 			
 			if (locationCoords.length() == 2) {
 				this.coords = new double[]{
@@ -69,12 +69,13 @@ public class ConditionInfo {
 	public double[] getCoords() {
 		return coords;
 	}
-	public String getLocation() {
-		return location;
-	}
-
+	
 	public void setCoords(double[] coords) {
 		this.coords = coords;
+	}
+	
+	public String getLocation() {
+		return location;
 	}
 
 	public void setLocation(String location) {
@@ -121,7 +122,8 @@ public class ConditionInfo {
 			JSONArray coordArray = new JSONArray();
 			coordArray.put(coords[0]);
 			coordArray.put(coords[1]);
-			jsonObject.put(CloudConstants.JSON_CLOUD_COORDS, coordArray);
+			jsonObject.put(CloudConstants.JSON_CLOUD_READING_COORDS, 
+					coordArray);
 		}
 		
 		jsonObject.put(CloudConstants.JSON_CLOUD_LOCATION, location);

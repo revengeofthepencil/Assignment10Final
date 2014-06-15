@@ -3,6 +3,7 @@ package com.example.assignment10final.model;
 import java.text.ParseException;
 import java.util.Date;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,7 +31,10 @@ public class CloudSighting {
 	}
 	
 	public CloudSighting(JSONObject jsonObject) throws JSONException {
+		
 
+
+		
 		if (jsonObject.has(CloudConstants.JSON_CLOUD_DATE)) {
 			try {
 				this.date = CloudConstants.FORMATTER.parse(
@@ -94,12 +98,22 @@ public class CloudSighting {
 		jsonObject.put(CloudConstants.JSON_CLOUD_DESC, 
 				description);
 		
+		
 		if (cloudImage != null) {
 			jsonObject.put(CloudConstants.JSON_CLOUD_IMAGE, 
 					cloudImage);
 		}
 		
 		return jsonObject;
+	}
+
+	// wrapper function to get coords from conditionInfo
+	public double[] getCoords() {
+		if (conditionInfo != null) {
+			return conditionInfo.getCoords();
+		} else {
+	 		return null;
+		}
 	}
 
 	@Override

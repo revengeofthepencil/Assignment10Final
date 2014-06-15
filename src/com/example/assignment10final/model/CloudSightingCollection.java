@@ -3,7 +3,6 @@ package com.example.assignment10final.model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -88,16 +87,17 @@ public class CloudSightingCollection {
 
 		CloudSighting cs1 = new CloudSighting(
 				cal.getTime(), "hey you", "", 
-				new ConditionInfo(new double[]{1.1, 1.2}, "San Francisco, CA"));
-
+				new ConditionInfo(new double[]{37.762076, -122.412184}, 
+						"San Francisco, CA"));
+		
 		cal.add(Calendar.DAY_OF_MONTH, -5);
 		cal.add(Calendar.HOUR_OF_DAY, +2);
 		cal.add(Calendar.MINUTE, +35);
 		
 		CloudSighting cs2 = new CloudSighting(
 				cal.getTime(), "hey me", "", 
-				new ConditionInfo(new double[]{1.1, 1.2}, "Seattle, WA"));
-		
+				new ConditionInfo(new double[]{47.661579, -122.316120}, 
+						"Seattle, WA"));
 		cloudSightings.add(cs1);
 		cloudSightings.add(cs2);
 

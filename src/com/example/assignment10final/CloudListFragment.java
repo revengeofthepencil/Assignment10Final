@@ -179,9 +179,18 @@ public class CloudListFragment extends ListFragment {
 			TextView sightingInfo = (TextView) convertView
 					.findViewById(R.id.textview_cloud_sighting_loc);
 
+			
+			String coordString = null;
+			if (cloudSighting.getCoords() != null) {
+				coordString = cloudSighting.getCoords()[0]
+						+ " / " + cloudSighting.getCoords()[1];
+			}
+			
 			sightingInfo.setText(cloudSighting.
-					getConditionInfo().getLocation());
+					getConditionInfo().getLocation()
+					+ "\nlocation: " + coordString);
 
+			
 			TextView sightingDate = (TextView) convertView
 					.findViewById(R.id.textview_cloud_sighting_date);
 			sightingDate.setText(CloudConstants.FORMATTER.format(

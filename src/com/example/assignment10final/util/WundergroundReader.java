@@ -123,7 +123,11 @@ public class WundergroundReader {
 				+ ((Double) coords[1]).toString() + JSON_QUERY_EXTENSION;
 
 		Log.i(CloudConstants.LOG_KEY, "coordJSONQuery = " + coordJSONQuery);
-		return fetchConditionsWithQuery(coordJSONQuery, false);
+		ConditionInfo conditionInfo = fetchConditionsWithQuery(coordJSONQuery, false);
+		
+		// hold on to the coords passed from the activity
+		conditionInfo.setCoords(coords);
+		return conditionInfo;
 	}
 	
 	private ConditionInfo fetchConditionsWithQuery(String queryString, boolean cacheLatLong) {
