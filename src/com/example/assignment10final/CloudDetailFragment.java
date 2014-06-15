@@ -141,15 +141,15 @@ public class CloudDetailFragment extends Fragment {
 	}
 
 	
-	
 	private void initSightingImage() {
 		ImageView imageView = (ImageView) view.findViewById(R.id.imageview_cloud_picture);
 
 		// use the default image if nothing is set for the current sighting or
 		// if the image fails to load from disk
 		if (cloudSighting.getCloudImage() == null
-				|| populateImageViewFromFile(imageView, 
-						cloudSighting.getCloudImage()) == false) {
+				|| PictureUtils.populateImageViewFromFile(getActivity(), 
+						imageView, 
+						cloudSighting.getCloudImage(), null, null) == false) {
 			imageView.setImageResource(R.drawable.cloud_default);
 		}
 
@@ -321,29 +321,7 @@ public class CloudDetailFragment extends Fragment {
 
 	}
 	
-	private boolean populateImageViewFromFile(ImageView imageView, String photoPath) {
-		
-		BitmapDrawable bmDrawable = null;
-		
-		// bail out if we don't have the photo
-		if (getActivity().getFileStreamPath(photoPath) == null) {
-			return false;
-		}
-		
-		String path = getActivity().getFileStreamPath(photoPath)
-				.getAbsolutePath();
-		if (path == null) {
-			return false;
-		}
-		
-		bmDrawable = PictureUtils.getScaledDrawable(getActivity(), path);
-		if (bmDrawable == null) {
-			return false;
-		}
 
-		imageView.setImageDrawable(bmDrawable);			
-		return true;
-	}
 
 	/**
 	 * Set a new image for the CloudSighting after deleting any existing image
@@ -364,6 +342,8 @@ public class CloudDetailFragment extends Fragment {
 				existingImage.delete();
 			}
 		}
+		
+
 		
 		// now that we've dumped the old image, set the new one
 		sighting.setCloudImage(imagePath);

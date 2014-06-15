@@ -8,19 +8,27 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.Display;
+import android.view.View;
 import android.widget.ImageView;
 
 public class PictureUtils {
 
 
 	@SuppressWarnings("deprecation")
-	public static BitmapDrawable getScaledDrawable(Activity a, String path)
-	{
+	public static BitmapDrawable getScaledDrawable(Activity a, String path) {
 		Display display = a.getWindowManager().getDefaultDisplay();
 		// we want to reduce the image size just a bit so it doesn't blow out
 		// the display
 		float destWidth = (float) (display.getWidth());
 		float destHeight = (float) (display.getHeight());
+		return getScaledDrawable(a, destWidth, destHeight, path);
+
+	}
+	
+
+	@SuppressWarnings("deprecation")
+	public static BitmapDrawable getScaledDrawable(Activity a, float destWidth, 
+			float destHeight, String path) {
 
 		//read in the dimensions of the image on disk
 		BitmapFactory.Options options = new BitmapFactory.Options();
@@ -33,17 +41,6 @@ public class PictureUtils {
 		
 		int srcWidth = mapOrig.getWidth();
 		int srcHeight = mapOrig.getHeight();
-		
-		/*
-		float heightDiff = srcHeight - destHeight;
-		float widthDiff = srcWidth - destWidth;
-		double reducePercent = 0.0;
-		if (heightDiff > widthDiff && heightDiff > 0) {
-			reducePercent = heightDiff / srcHeight;
-		} else if (widthDiff > 0) {
-			reducePercent = widthDiff / srcWidth;
-		}
-		*/
 		
 		if (srcHeight > srcWidth && srcHeight > destHeight) {
 			double reducePercent = (srcHeight - destHeight) / srcHeight;
@@ -152,4 +149,39 @@ public class PictureUtils {
 			
 		}
 	}	
+	
+	
+	public static boolean populateImageViewFromFile(Activity activity, ImageView imageView, 
+			String photoPath, Long width, Long height) {
+		
+		BitmapDrawable bmDrawable = null;
+		
+		// bail out if we don't have the photo
+		if (activity.getFileStreamPath(photoPath) == null) {
+			return false;
+		}
+		
+		String path = activity.getFileStreamPath(photoPath)
+				.getAbsolutePath();
+		if (path == null) {
+			return false;
+		}
+
+		// check to see if we passed in a width/height or if we should just use
+		// the view extents
+		if (width != null && height != null) {
+			bmDrawable = PictureUtils.getScaledDrawable(activity, width, 
+					height, path);
+		} else {
+			bmDrawable = PictureUtils.getScaledDrawable(activity, path);
+			
+		}
+
+		if (bmDrawable == null) {
+			return false;
+		}
+
+		imageView.setImageDrawable(bmDrawable);			
+		return true;
+	}
 }

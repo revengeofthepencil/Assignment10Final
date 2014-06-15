@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +36,8 @@ import com.example.assignment10final.util.PictureUtils;
 public class CloudListFragment extends ListFragment {
 	List<CloudSighting> cloudSightings;
 	final Set<Integer> checkedPositions = new HashSet<Integer>();
+	private static final Long MAX_THUMBNAIL_WIDTH = 110L;
+	private static final Long MAX_THUMBNAIL_HEIGHT = 110L;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -196,8 +199,14 @@ public class CloudListFragment extends ListFragment {
 			sightingDate.setText(CloudConstants.FORMATTER.format(
 					cloudSighting.getDate()));
 
+			// get the image for this cloud or use the default
+			initSightingImage(convertView, cloudSighting);
+			
 			View cloudItemContainer = convertView.findViewById(
 					R.id.layout_cloud_item_container);
+			
+			
+			
 			
 			// we're putting the OnClickListener here instead of at the list
 			// level to prevent the app from moving to the detail view when a
@@ -213,36 +222,25 @@ public class CloudListFragment extends ListFragment {
 				}
 			});
 
-
-			Drawable img = null;
-			
-			if (cloudSighting.getCloudImage() != null) {
-				String path = getActivity().getFileStreamPath(cloudSighting.getCloudImage())
-						.getAbsolutePath();
-				if (path != null) {
-					
-					BitmapDrawable bmd = PictureUtils.getScaledDrawable(getActivity(), 
-							path);
-					if (bmd != null) {
-						img = bmd;
-					}
-				}
-				
-			} 
-			
-			// if no image was set or we couldn't get the Bitmap image, 
-			//	use the default
-			if (img == null) {
-				img = getActivity().getResources()
-						.getDrawable(R.drawable.cloud_default);
-			}
-			
-
-			img.setBounds(0, 0, 60, 60);
-			//sightingInfo.setCompoundDrawables(img, null, null, null);
-
 			return convertView;
 		}
 		
+	}
+	
+
+	private void initSightingImage(View view, CloudSighting cloudSighting) {
+		ImageView imageView = (ImageView) view.findViewById(R.id.imageview_cloud_list_picture);
+
+		// use the default image if nothing is set for the current sighting or
+		// if the image fails to load from disk
+		if (cloudSighting.getCloudImage() == null
+				|| PictureUtils.populateImageViewFromFile(getActivity(), 
+						imageView, 
+						cloudSighting.getCloudImage(),
+						MAX_THUMBNAIL_WIDTH,
+						MAX_THUMBNAIL_HEIGHT) == false) {
+			imageView.setImageResource(R.drawable.cloud_default);
+		}
+
 	}
 }
