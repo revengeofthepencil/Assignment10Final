@@ -131,21 +131,20 @@ public class PictureUtils {
 	 * from the same location in the same millisecond. That's a chance I'm
 	 * willing to take.
 	 * 
-	 * @param sightingLocation
+	 * @param baseImageName
 	 * @return a unique string for the sighting image
 	 */
 	@SuppressLint("DefaultLocale")
-	public static String getUniqueImageNameForLocation(String sightingLocation) {
-		Date now = new Date();
-
-		if (sightingLocation != null) {
+	public static String getUniqueImageNameForLocation(String baseImageName) {
+		
+		if (baseImageName != null) {
 			// strip any non alphanumeric characters
-			return sightingLocation.replaceAll("[^A-Za-z0-9]", "").toLowerCase()
-					+ '_' + now.getTime() 
+			return baseImageName.replaceAll("[^A-Za-z0-9]", "").toLowerCase()
+					+ '_' + System.currentTimeMillis()
 					+ ".jpg";
 			
 		} else {
-			return now.getTime() + ".jpg";
+			return System.currentTimeMillis() + ".jpg";
 			
 		}
 	}	

@@ -16,7 +16,7 @@
 
     <!--
     note: we're providing a pretty hefty margin here so the 
-    last itme doesn't get swallowed up by the delete button when we 
+    last itme doesn't get swallowed up by the delete/map buttons when we 
     have to scroll
     -->
 
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/textview_list_summary"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="65dp"
+        android:layout_marginBottom="120dp"
         android:layout_marginTop="5dp" >
     </ListView>
 

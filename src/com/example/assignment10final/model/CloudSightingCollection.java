@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import org.json.JSONException;
 
@@ -41,6 +42,17 @@ public class CloudSightingCollection {
 		return cloudSightings;
 	}
 	
+	public CloudSighting getCloudSightingByID(String id) {
+		for (CloudSighting cloudSighting : cloudSightings) {
+			if (cloudSighting.getId().equals(id)) {
+				return cloudSighting;
+			}
+		}
+		
+		// if we make it here, we didn't find it
+		return null;
+	}
+	
 	public static int getCount() {
 		return cloudSightings.size();
 	}
@@ -74,6 +86,7 @@ public class CloudSightingCollection {
 		}
 
 		cloudSightingCollection.setUpDummyData();
+		
 		return cloudSightingCollection;
 	}
 	
@@ -85,7 +98,9 @@ public class CloudSightingCollection {
 		Calendar cal = new GregorianCalendar();
 		cal.add(Calendar.DAY_OF_MONTH, -10);
 
+		 
 		CloudSighting cs1 = new CloudSighting(
+				UUID.randomUUID().toString(),
 				cal.getTime(), "hey you", "", 
 				new ConditionInfo(new double[]{37.762076, -122.412184}, 
 						"San Francisco, CA"));
@@ -95,6 +110,7 @@ public class CloudSightingCollection {
 		cal.add(Calendar.MINUTE, +35);
 		
 		CloudSighting cs2 = new CloudSighting(
+				UUID.randomUUID().toString(),
 				cal.getTime(), "hey me", "", 
 				new ConditionInfo(new double[]{47.661579, -122.316120}, 
 						"Seattle, WA"));

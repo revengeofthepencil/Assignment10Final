@@ -15,15 +15,18 @@ public class CloudSighting {
 	private String description;
 	private String cloudImage;
 	private ConditionInfo conditionInfo;
+	private String id;
 	
-	public CloudSighting(Date date) {
+	public CloudSighting(String id, Date date) {
 		super();
 		this.date = date;
+		this.id = id;
 	}
 
-	public CloudSighting(Date date, String description, String cloudImage,
+	public CloudSighting(String id, Date date, String description, String cloudImage,
 			ConditionInfo conditionInfo) {
 		super();
+		this.id = id;
 		this.date = date;
 		this.description = description;
 		this.cloudImage = cloudImage;
@@ -32,8 +35,9 @@ public class CloudSighting {
 	
 	public CloudSighting(JSONObject jsonObject) throws JSONException {
 		
-
-
+		if(jsonObject.has(CloudConstants.JSON_CLOUD_ID)) {
+			this.id = jsonObject.getString(CloudConstants.JSON_CLOUD_ID);
+		}
 		
 		if (jsonObject.has(CloudConstants.JSON_CLOUD_DATE)) {
 			try {
@@ -97,7 +101,8 @@ public class CloudSighting {
 				conditionInfo.toJSON());
 		jsonObject.put(CloudConstants.JSON_CLOUD_DESC, 
 				description);
-		
+		jsonObject.put(CloudConstants.JSON_CLOUD_ID, 
+				id);
 		
 		if (cloudImage != null) {
 			jsonObject.put(CloudConstants.JSON_CLOUD_IMAGE, 
@@ -105,6 +110,13 @@ public class CloudSighting {
 		}
 		
 		return jsonObject;
+	}
+
+	
+	
+	
+	public String getId() {
+		return id;
 	}
 
 	// wrapper function to get coords from conditionInfo
@@ -120,6 +132,10 @@ public class CloudSighting {
 	public String toString() {
 		return getConditionInfo().getLocation() + ", " 
 				+ CloudConstants.FORMATTER.format(getDate());
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 }

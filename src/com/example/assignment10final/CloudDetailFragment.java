@@ -2,6 +2,7 @@ package com.example.assignment10final;
 
 import java.io.File;
 import java.util.Date;
+import java.util.UUID;
 
 import android.app.Activity;
 import android.content.Context;
@@ -39,39 +40,37 @@ public class CloudDetailFragment extends Fragment {
 
 	private CloudSighting cloudSighting;
 	private ConditionInfo conditionInfo;
-	private int id;
+	private String id;
 	private View view;
 	public static final int REQUEST_PHOTO = 1;
-
-
-	public static CloudDetailFragment newInstance(int id) {
-		Bundle args = new Bundle();
-		
-		args.putInt(CloudConstants.EXTRA_CLOUD_SIGHTING_ID, id);
-		CloudDetailFragment dFrag = new CloudDetailFragment();
-		dFrag.setArguments(args);
-		return dFrag;
-	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		id = getActivity().getIntent().getIntExtra(
-				CloudConstants.EXTRA_CLOUD_SIGHTING_ID, 0);
+		id = getActivity().getIntent().getStringExtra(
+				CloudConstants.EXTRA_CLOUD_SIGHTING_ID);
 
-		if(id < 0) {
-			cloudSighting = new CloudSighting(new Date());
-			Log.i(CloudConstants.LOG_KEY, "in onCreate with id = " + id + "new alien");
-		} else {
+		if(id != null ) {
 			cloudSighting = CloudSightingCollection.getInstance(getActivity())
-					.getCloudSightings().get(id);
+					.getCloudSightingByID(id);
+		} 
+		
+
+		if (cloudSighting != null) {
 			if (cloudSighting.getConditionInfo() != null) {
 				conditionInfo = cloudSighting.getConditionInfo();
 			}
 			
 			Log.i(CloudConstants.LOG_KEY, "in onCreate with id = " + id + ", alien location = "
 					 + cloudSighting.getDate());
+		} else {
+			cloudSighting = new CloudSighting(
+					UUID.randomUUID().toString(),
+					new Date());
+			Log.i(CloudConstants.LOG_KEY, "in onCreate with id = " + id + "new alien");
+			
 		}
+
 	}
 	
 	@Override
@@ -215,16 +214,15 @@ public class CloudDetailFragment extends Fragment {
 		
 		// add to the sighting collection if this is a new sighting and 
 		// we have conditions
-		if (id < 0 
+		if (id == null 
 				&& cloudSighting.getConditionInfo() != null 
 				&& cloudSighting.getConditionInfo().getLocation().length() > 0) {
 			Log.i(CloudConstants.LOG_KEY, "adding new sighting for location "
 					+ cloudSighting.getConditionInfo().getLocation());
-
 			CloudSightingCollection.addCloudSighting(cloudSighting);
 
 			// hold on to the id for another pause
-			id = CloudSightingCollection.getCount() - 1;
+			id = cloudSighting.getId();
 		}
 
 		CloudSightingCollection.getInstance(getActivity())

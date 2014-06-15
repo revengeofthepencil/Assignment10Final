@@ -16,6 +16,7 @@ public class CloudConstants {
 	public static final int RANDOM_STRING_LENGTH = 24;
 	
 	// JSON keys for serializing records
+	public static final String JSON_CLOUD_ID = "cloud_ID";
 	public static final String JSON_CLOUD_CONDITION_INFO = "cloud_condition_info";
 	public static final String JSON_CLOUD_LOCATION = "cloud_location";
 	public static final String JSON_CLOUD_DESC = "cloud_desc";

@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 import android.content.Intent;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -23,10 +21,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.assignment10final.model.CloudSighting;
 import com.example.assignment10final.model.CloudSightingCollection;
@@ -178,20 +177,15 @@ public class CloudListFragment extends ListFragment {
 			});
 			
 			
-			CloudSighting cloudSighting = getItem(position);
+			final CloudSighting cloudSighting = getItem(position);
 			TextView sightingInfo = (TextView) convertView
 					.findViewById(R.id.textview_cloud_sighting_loc);
 
-			
-			String coordString = null;
-			if (cloudSighting.getCoords() != null) {
-				coordString = cloudSighting.getCoords()[0]
-						+ " / " + cloudSighting.getCoords()[1];
-			}
-			
+
 			sightingInfo.setText(cloudSighting.
 					getConditionInfo().getLocation()
-					+ "\nlocation: " + coordString);
+					+ ", id = " + cloudSighting.getId());
+					//+ "\nlocation: " + coordString);
 
 			
 			TextView sightingDate = (TextView) convertView
@@ -206,17 +200,15 @@ public class CloudListFragment extends ListFragment {
 					R.id.layout_cloud_item_container);
 			
 			
-			
-			
 			// we're putting the OnClickListener here instead of at the list
 			// level to prevent the app from moving to the detail view when a
 			// user clicks the checkbox. Yeah, there's probably an easier way
 			cloudItemContainer.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					Log.i(CloudConstants.LOG_KEY, "sightingInfo.setOnClickListener");
 					Intent intent = new Intent(getActivity(), CloudDetailActivity.class);
-					intent.putExtra(CloudConstants.EXTRA_CLOUD_SIGHTING_ID, position);
+					intent.putExtra(CloudConstants.EXTRA_CLOUD_SIGHTING_ID, 
+							cloudSighting.getId());
 					startActivity(intent);
 					
 				}
