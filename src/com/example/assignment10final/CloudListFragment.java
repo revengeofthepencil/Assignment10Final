@@ -51,6 +51,15 @@ public class CloudListFragment extends ListFragment {
 		inflater.inflate(R.menu.cloud_list, menu);
 	}
 
+	
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		((CloudSightingAdapter) getListAdapter()).notifyDataSetChanged();
+	}
+	
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch(item.getItemId())

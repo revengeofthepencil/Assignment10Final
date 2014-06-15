@@ -9,4 +9,7 @@
     <string name="delete_sighting">Delete Sighting</string>
     <string name="fetching_conditions">Fetching Current Conditions</string>
     <string name="menu_new_sighting">Add</string>
+    <string name="sighting_desc_hint">Would you like to enter any other information about this cloud?</string>
+	<string name="change_cloud_image">Take a new photo for this cloud</string>
+	<string name="cloud_image">Cloud Photo</string>    
 </resources>

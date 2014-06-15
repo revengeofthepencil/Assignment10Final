@@ -11,6 +11,7 @@ import java.net.URLConnection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 
@@ -25,10 +26,6 @@ public class WundergroundReader {
 	private static final String METHOD_GET_CONDITIONS = "conditions";
 	private static final String METHOD_RUN_QUERY = "q";
 	private static final String JSON_QUERY_EXTENSION = ".json";
-
-	private static final String EXTRA_SMALL_URL = "url_s";
-
-	private static final String XML_PHOTO = "photo";
 
 	private JSONObject makeJSONCall(String url) {
 		URL myurl = null;
@@ -112,31 +109,37 @@ public class WundergroundReader {
 		return null;
 	}
 
+	public ConditionInfo fetchConditions(String zipcode) {
+		return fetchConditionsWithQuery(zipcode + JSON_QUERY_EXTENSION, true);
+	}
+	
 	public ConditionInfo fetchConditions(double[] coords) {
 		if (coords == null || coords.length != 2) {
 			Log.e(TAG, "invalid coords");
 			return null;
 		}
 
-		Log.i(CloudConstants.LOG_KEY, "cords = " + coords[0] + " / "
-				+ coords[1]);
-
 		String coordJSONQuery = ((Double) coords[0]).toString() + ','
 				+ ((Double) coords[1]).toString() + JSON_QUERY_EXTENSION;
 
 		Log.i(CloudConstants.LOG_KEY, "coordJSONQuery = " + coordJSONQuery);
+		return fetchConditionsWithQuery(coordJSONQuery, false);
+	}
+	
+	private ConditionInfo fetchConditionsWithQuery(String queryString, boolean cacheLatLong) {
+
 
 		ConditionInfo conditionInfo = new ConditionInfo();
 
 		String url = Uri.parse(ENDPOINT).buildUpon().appendPath(API_KEY)
 				.appendPath(METHOD_GET_CONDITIONS).appendPath(METHOD_RUN_QUERY)
-				.appendPath(coordJSONQuery).build().toString();
+				.appendPath(queryString).build().toString();
 
 		Log.i(CloudConstants.LOG_KEY, "url = " + url);
 
 		JSONObject jsonWeather = makeJSONCall(url);
 		try {
-			populateConditionInfoFromJSON(conditionInfo, jsonWeather);
+			populateConditionInfoFromJSON(conditionInfo, jsonWeather, cacheLatLong);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -145,7 +148,7 @@ public class WundergroundReader {
 	}
 
 	private void populateConditionInfoFromJSON(ConditionInfo conditionInfo, 
-			JSONObject jsonWeather) throws JSONException {
+			JSONObject jsonWeather, boolean cacheLatLong) throws JSONException {
 		if (jsonWeather.has("display_location")) {
 			JSONObject displayLoc = jsonWeather.getJSONObject("display_location");
 			if (displayLoc.has("full")) {
@@ -174,6 +177,17 @@ public class WundergroundReader {
 					.getString("wind_string"));
 		}
 
+		
+		// hold on to the coords if we have them and cacheLatLong is true
+		if (cacheLatLong == true && jsonWeather.has("latitude")
+				&& jsonWeather.has("longitude")) {
+			//provider name is not needed
+		    Location targetLocation = new Location("");
+		    targetLocation.setLatitude(jsonWeather.getDouble("latitude"));
+		    targetLocation.setLongitude(jsonWeather.getDouble("longitude"));
+			LocationCachingUtil.getInstance().setLocation(targetLocation);
+		}
+		
 	}
 	
 	

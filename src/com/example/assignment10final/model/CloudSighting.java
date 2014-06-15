@@ -1,5 +1,6 @@
 package com.example.assignment10final.model;
 
+import java.text.ParseException;
 import java.util.Date;
 
 import org.json.JSONException;
@@ -29,7 +30,34 @@ public class CloudSighting {
 	}
 	
 	public CloudSighting(JSONObject jsonObject) throws JSONException {
-		// TODO: serialize
+
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_DATE)) {
+			try {
+				this.date = CloudConstants.FORMATTER.parse(
+								jsonObject.getString(
+										CloudConstants.JSON_CLOUD_DATE));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_IMAGE)) {
+			this.cloudImage = jsonObject.getString(
+					CloudConstants.JSON_CLOUD_IMAGE);
+		}
+		
+
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_DESC)) {
+			this.description = jsonObject.getString(
+					CloudConstants.JSON_CLOUD_DESC);
+		}
+		
+		
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_CONDITION_INFO)) {
+			JSONObject jsonConditions = (JSONObject) jsonObject.get(CloudConstants.JSON_CLOUD_CONDITION_INFO);
+			this.conditionInfo = new ConditionInfo(jsonConditions);
+		}	
 	}
 	
 	public Date getDate() {
@@ -58,8 +86,20 @@ public class CloudSighting {
 	}
 	
 	public JSONObject toJSON() throws JSONException {
-		// TODO: serialize
-		return null;
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put(CloudConstants.JSON_CLOUD_DATE, 
+				CloudConstants.FORMATTER.format(date));
+		jsonObject.put(CloudConstants.JSON_CLOUD_CONDITION_INFO, 
+				conditionInfo.toJSON());
+		jsonObject.put(CloudConstants.JSON_CLOUD_DESC, 
+				description);
+		
+		if (cloudImage != null) {
+			jsonObject.put(CloudConstants.JSON_CLOUD_IMAGE, 
+					cloudImage);
+		}
+
+		return jsonObject;
 	}
 
 	@Override

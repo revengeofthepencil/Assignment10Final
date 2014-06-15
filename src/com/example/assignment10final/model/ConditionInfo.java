@@ -1,5 +1,11 @@
 package com.example.assignment10final.model;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.example.assignment10final.util.CloudConstants;
+
 
 public class ConditionInfo {
 	private String conditions;
@@ -10,6 +16,48 @@ public class ConditionInfo {
 	private String wind;
 
 	public ConditionInfo() {}
+	
+	public ConditionInfo(JSONObject jsonObject) throws JSONException {
+		
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_CONDITIONS)) {
+			this.conditions = jsonObject
+					.getString(CloudConstants.JSON_CLOUD_CONDITIONS);
+		}
+		
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_TEMPERATURE)) {
+			this.temperature = jsonObject
+					.getString(CloudConstants.JSON_CLOUD_TEMPERATURE);
+		}
+
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_HUMIDITY)) {
+			this.humidity = jsonObject
+					.getString(CloudConstants.JSON_CLOUD_HUMIDITY);
+		}
+
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_LOCATION)) {
+			this.humidity = jsonObject
+					.getString(CloudConstants.JSON_CLOUD_LOCATION);
+		}
+
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_WIND)) {
+			this.wind = jsonObject
+					.getString(CloudConstants.JSON_CLOUD_WIND);
+		}
+		
+		if (jsonObject.has(CloudConstants.JSON_CLOUD_COORDS)) {
+			JSONArray locationCoords = (JSONArray) jsonObject
+					.get(CloudConstants.JSON_CLOUD_COORDS);
+			
+			if (locationCoords.length() == 2) {
+				this.coords = new double[]{
+						locationCoords.getDouble(0),
+						locationCoords.getDouble(1)
+				};
+			}
+		}
+
+		
+	}
 	
 	public ConditionInfo(double[] coords,
 			String location) {
@@ -65,6 +113,23 @@ public class ConditionInfo {
 		this.wind = wind;
 	}
 	
-	
+	public JSONObject toJSON() throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put(CloudConstants.JSON_CLOUD_CONDITIONS, conditions);
+		
+		if (coords != null && coords.length == 2) {
+			JSONArray coordArray = new JSONArray();
+			coordArray.put(coords[0]);
+			coordArray.put(coords[1]);
+			jsonObject.put(CloudConstants.JSON_CLOUD_COORDS, coordArray);
+		}
+
+		jsonObject.put(CloudConstants.JSON_CLOUD_LOCATION, location);
+		jsonObject.put(CloudConstants.JSON_CLOUD_TEMPERATURE, temperature);
+		jsonObject.put(CloudConstants.JSON_CLOUD_HUMIDITY, humidity);
+		jsonObject.put(CloudConstants.JSON_CLOUD_WIND, wind);
+		return jsonObject;
+
+	}
 	
 }

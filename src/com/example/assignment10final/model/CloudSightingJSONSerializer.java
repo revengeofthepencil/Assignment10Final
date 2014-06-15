@@ -61,6 +61,7 @@ public class CloudSightingJSONSerializer {
 			throws JSONException, IOException {
 		JSONArray jsonArray = new JSONArray();
 		for (CloudSighting cloudSighting : cloudSightings) {
+			//String cloudString = cloudSighting.toJSON().toString();
 			jsonArray.put(cloudSighting.toJSON());
 		}
 
