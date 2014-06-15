@@ -10,6 +10,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -41,7 +44,26 @@ public class CloudListFragment extends ListFragment {
 		setListAdapter(adapter);
 	}
 	
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.cloud_list, menu);
+	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch(item.getItemId())
+		{
+			case R.id.menu_item_new_cloud:
+				Intent intent = new Intent(getActivity(), CloudDetailActivity.class);
+				intent.putExtra(CloudConstants.EXTRA_CLOUD_SIGHTING_ID, -1);
+				startActivity(intent);
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
 	
 	private class CloudSightingAdapter extends ArrayAdapter<CloudSighting> {
 

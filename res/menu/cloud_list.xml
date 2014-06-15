@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.myownbadself.assignment07fileio.AlienSightingListActivity" >
+
+    <item
+        android:id="@+id/menu_item_new_cloud"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/menu_new_sighting"
+        app:showAsAction="ifRoom|withText"/>
+</menu>

@@ -8,4 +8,5 @@
     <string name="how_to">How to</string>
     <string name="delete_sighting">Delete Sighting</string>
     <string name="fetching_conditions">Fetching Current Conditions</string>
+    <string name="menu_new_sighting">Add</string>
 </resources>
