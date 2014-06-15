@@ -79,6 +79,10 @@ public class CloudSightingCollection {
 	}
 	
 	private void setUpDummyData() {
+		if (cloudSightings != null && cloudSightings.size() > 1) {
+			return;
+		}
+		
 		Calendar cal = new GregorianCalendar();
 		cal.add(Calendar.DAY_OF_MONTH, -10);
 

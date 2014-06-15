@@ -19,6 +19,7 @@ import com.example.assignment10final.model.CloudSighting;
 import com.example.assignment10final.model.CloudSightingCollection;
 import com.example.assignment10final.model.ConditionInfo;
 import com.example.assignment10final.util.CloudConstants;
+import com.example.assignment10final.util.LocationCachingUtil;
 import com.example.assignment10final.util.WundergroundReader;
 
 public class CloudDetailFragment extends Fragment {
@@ -61,7 +62,7 @@ public class CloudDetailFragment extends Fragment {
 	}
 
 
-	private void setUpAdapter() {
+	private void populateConditions() {
 		if (getActivity() == null || conditionInfo == null) {
 			return;
 		}
@@ -114,45 +115,66 @@ public class CloudDetailFragment extends Fragment {
 			implements LocationListener {
 
 		private LocationManager locationManager;
-        public double latitude = 0.0;
-        public double longitue = 0.0;
-        //private Context context;
-        
+		private Location location;
+        private Context context;
+        LocationCachingUtil locationTrackingUtil;
 		public FetchConditionsTask(Context context) {
 			super();
-			locationManager = (LocationManager) context.getSystemService(
-					Context.LOCATION_SERVICE);
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-					0, 0, this);
-
+			this.context = context;
 		}
 
+        @Override
+        protected void onPreExecute() {
+        	locationTrackingUtil = LocationCachingUtil.getInstance();
+        	Location locationFromUtil = locationTrackingUtil.getLocation();
+        	if (locationFromUtil == null) {
+    			locationManager = (LocationManager) context.getSystemService(
+    					Context.LOCATION_SERVICE);
+    			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+    					0, 0, this);
+        	} else {
+    			Log.i(CloudConstants.LOG_KEY, "No need to wait, the tracking util has a location");
+        		location = locationFromUtil;
+        	}
+
+        }
+        
+
+        @Override
+        protected void onCancelled(){
+        	if (locationManager != null) {
+            	locationManager.removeUpdates(this);
+        	}
+        }
+
+		
 		@Override
 		protected ConditionInfo doInBackground(Void... params) {
 			// hold up while we wait for updates
-			
 			Log.i(CloudConstants.LOG_KEY, "Waiting for coords in doInBackground");
 
-			while(this.latitude == 0.0) {
+			while(this.location == null) {
 			}
+			
 			Log.i(CloudConstants.LOG_KEY, "oh snap! we got lat / long "
-					+ latitude + " / " + longitue);
+					+ this.location.getLatitude() + " / " + this.location.getLongitude());
 			return new WundergroundReader().fetchConditions(
-					new double[]{this.latitude, this.longitue}
+					new double[]{this.location.getLatitude(), 
+							this.location.getLongitude()}
 					);
 		}
 
 		@Override
 		protected void onPostExecute(ConditionInfo result) {
 			conditionInfo = result;
-			setUpAdapter(); 
+			populateConditions(); 
 		}
 
 		@Override
 		public void onLocationChanged(Location location) {
 			Log.i(CloudConstants.LOG_KEY, "Location changed in FetchConditionsTask, " + location.getAccuracy() + " , " + location.getLatitude()+ "," + location.getLongitude());
-			this.latitude = location.getLatitude();
-			this.longitue = location.getLongitude();
+			this.location = location;
+			locationTrackingUtil.setLocation(location);
 			locationManager.removeUpdates(this);
 		}
 
