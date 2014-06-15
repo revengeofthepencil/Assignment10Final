@@ -177,14 +177,23 @@ public class CloudListFragment extends ListFragment {
 			
 			CloudSighting cloudSighting = getItem(position);
 			TextView sightingInfo = (TextView) convertView
-					.findViewById(R.id.textview_cloud_sighting_info);
+					.findViewById(R.id.textview_cloud_sighting_loc);
 
-			sightingInfo.setText(cloudSighting.toString());
+			sightingInfo.setText(cloudSighting.
+					getConditionInfo().getLocation());
+
+			TextView sightingDate = (TextView) convertView
+					.findViewById(R.id.textview_cloud_sighting_date);
+			sightingDate.setText(CloudConstants.FORMATTER.format(
+					cloudSighting.getDate()));
+
+			View cloudItemContainer = convertView.findViewById(
+					R.id.layout_cloud_item_container);
 			
 			// we're putting the OnClickListener here instead of at the list
 			// level to prevent the app from moving to the detail view when a
 			// user clicks the checkbox. Yeah, there's probably an easier way
-			sightingInfo.setOnClickListener(new OnClickListener() {
+			cloudItemContainer.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					Log.i(CloudConstants.LOG_KEY, "sightingInfo.setOnClickListener");
@@ -221,7 +230,7 @@ public class CloudListFragment extends ListFragment {
 			
 
 			img.setBounds(0, 0, 60, 60);
-			sightingInfo.setCompoundDrawables(img, null, null, null);
+			//sightingInfo.setCompoundDrawables(img, null, null, null);
 
 			return convertView;
 		}

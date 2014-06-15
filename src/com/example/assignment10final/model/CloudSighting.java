@@ -98,7 +98,7 @@ public class CloudSighting {
 			jsonObject.put(CloudConstants.JSON_CLOUD_IMAGE, 
 					cloudImage);
 		}
-
+		
 		return jsonObject;
 	}
 

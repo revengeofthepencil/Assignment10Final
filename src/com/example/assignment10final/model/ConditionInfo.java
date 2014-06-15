@@ -35,7 +35,7 @@ public class ConditionInfo {
 		}
 
 		if (jsonObject.has(CloudConstants.JSON_CLOUD_LOCATION)) {
-			this.humidity = jsonObject
+			this.location = jsonObject
 					.getString(CloudConstants.JSON_CLOUD_LOCATION);
 		}
 
@@ -123,7 +123,7 @@ public class ConditionInfo {
 			coordArray.put(coords[1]);
 			jsonObject.put(CloudConstants.JSON_CLOUD_COORDS, coordArray);
 		}
-
+		
 		jsonObject.put(CloudConstants.JSON_CLOUD_LOCATION, location);
 		jsonObject.put(CloudConstants.JSON_CLOUD_TEMPERATURE, temperature);
 		jsonObject.put(CloudConstants.JSON_CLOUD_HUMIDITY, humidity);

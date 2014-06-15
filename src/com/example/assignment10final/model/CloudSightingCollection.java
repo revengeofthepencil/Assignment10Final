@@ -87,9 +87,13 @@ public class CloudSightingCollection {
 		cal.add(Calendar.DAY_OF_MONTH, -10);
 
 		CloudSighting cs1 = new CloudSighting(
-				new Date(), "hey you", "", 
+				cal.getTime(), "hey you", "", 
 				new ConditionInfo(new double[]{1.1, 1.2}, "San Francisco, CA"));
 
+		cal.add(Calendar.DAY_OF_MONTH, -5);
+		cal.add(Calendar.HOUR_OF_DAY, +2);
+		cal.add(Calendar.MINUTE, +35);
+		
 		CloudSighting cs2 = new CloudSighting(
 				cal.getTime(), "hey me", "", 
 				new ConditionInfo(new double[]{1.1, 1.2}, "Seattle, WA"));
