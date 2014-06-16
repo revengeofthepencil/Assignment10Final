@@ -105,6 +105,10 @@ public class CloudListFragment extends ListFragment {
 					
 	                if (sightingsToDrop.size() > 0) {
 						for (CloudSighting dropSighting : sightingsToDrop) {
+							// delete any images for this cloud sighting from disk
+							PictureUtils.deleteImageForCloudSighting(
+									dropSighting, getActivity());
+							// drop the cloud sighting from the collection
 							CloudSightingCollection.deleteCloudSighting(
 									dropSighting);
 						}

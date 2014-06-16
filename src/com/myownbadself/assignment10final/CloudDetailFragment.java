@@ -336,19 +336,12 @@ public class CloudDetailFragment extends Fragment {
 	 * @param imagePath
 	 */
 	private void replaceImageForSighting(CloudSighting sighting, String imagePath) {
-		if (sighting.getCloudImage() != null) {
-			
-			File existingImage = getActivity().getFileStreamPath(
-					sighting.getCloudImage());
-			if (existingImage != null && existingImage.exists()) {
-				existingImage.delete();
-			}
-		}
-		
-
-		
+		PictureUtils.deleteImageForCloudSighting(sighting, getActivity());
 		// now that we've dumped the old image, set the new one
 		sighting.setCloudImage(imagePath);
 	}
 
+	
 }
+
+

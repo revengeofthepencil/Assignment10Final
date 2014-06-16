@@ -1,6 +1,9 @@
 package com.myownbadself.assignment10final.util;
 
+import java.io.File;
 import java.util.Date;
+
+import com.myownbadself.assignment10final.model.CloudSighting;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -182,5 +185,21 @@ public class PictureUtils {
 
 		imageView.setImageDrawable(bmDrawable);			
 		return true;
+	}
+	
+
+	public static void deleteImageForCloudSighting(CloudSighting sighting,
+			Activity activity) {
+		if (sighting.getCloudImage() != null) {
+			
+			File existingImage = activity.getFileStreamPath(
+					sighting.getCloudImage());
+			if (existingImage != null && existingImage.exists()) {
+				existingImage.delete();
+			}
+		}
+		
+
+
 	}
 }
