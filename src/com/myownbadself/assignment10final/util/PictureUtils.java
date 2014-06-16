@@ -1,4 +1,4 @@
-package com.example.assignment10final.util;
+package com.myownbadself.assignment10final.util;
 
 import java.util.Date;
 

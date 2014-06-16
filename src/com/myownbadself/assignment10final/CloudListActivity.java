@@ -1,4 +1,4 @@
-package com.example.assignment10final;
+package com.myownbadself.assignment10final;
 
 import android.support.v4.app.Fragment;
 

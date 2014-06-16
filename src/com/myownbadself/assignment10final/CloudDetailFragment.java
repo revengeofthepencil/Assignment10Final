@@ -1,4 +1,4 @@
-package com.example.assignment10final;
+package com.myownbadself.assignment10final;
 
 import java.io.File;
 import java.util.Date;
@@ -24,13 +24,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.assignment10final.model.CloudSighting;
-import com.example.assignment10final.model.CloudSightingCollection;
-import com.example.assignment10final.model.ConditionInfo;
-import com.example.assignment10final.util.CloudConstants;
-import com.example.assignment10final.util.LocationCachingUtil;
-import com.example.assignment10final.util.PictureUtils;
-import com.example.assignment10final.util.WundergroundReader;
+import com.example.assignment10final.R;
+import com.myownbadself.assignment10final.model.CloudSighting;
+import com.myownbadself.assignment10final.model.CloudSightingCollection;
+import com.myownbadself.assignment10final.model.ConditionInfo;
+import com.myownbadself.assignment10final.util.CloudConstants;
+import com.myownbadself.assignment10final.util.LocationCachingUtil;
+import com.myownbadself.assignment10final.util.PictureUtils;
+import com.myownbadself.assignment10final.util.WundergroundReader;
 
 public class CloudDetailFragment extends Fragment {
 
@@ -63,10 +64,14 @@ public class CloudDetailFragment extends Fragment {
 			
 			Log.i(CloudConstants.LOG_KEY, "in onCreate with id = " + id + ", alien location = "
 					 + cloudSighting.getDate());
+			getActivity().setTitle(
+					cloudSighting.toString());
+			
 		} else {
 			cloudSighting = new CloudSighting(
 					UUID.randomUUID().toString(),
 					new Date());
+			getActivity().setTitle(getString(R.string.new_cloud_sighting));
 			Log.i(CloudConstants.LOG_KEY, "in onCreate with id = " + id + "new alien");
 			
 		}

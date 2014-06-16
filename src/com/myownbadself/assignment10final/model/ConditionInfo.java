@@ -1,10 +1,10 @@
-package com.example.assignment10final.model;
+package com.myownbadself.assignment10final.model;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.assignment10final.util.CloudConstants;
+import com.myownbadself.assignment10final.util.CloudConstants;
 
 
 public class ConditionInfo {

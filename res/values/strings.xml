@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Assignment10Final</string>
+    <string name="app_name">Cloud Collector</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_cloud_detail">CloudDetailActivity</string>
-    <string name="how_to">How to</string>
+    <string name="how_to">Click on a Sighting to See More Details</string>
     <string name="delete_sighting">Delete Selected Sightings</string>
     <string name="fetching_conditions">Fetching Current Conditions</string>
     <string name="menu_new_sighting">Add</string>
@@ -13,6 +13,9 @@
     <string name="change_cloud_image">Take a new photo for this cloud</string>
     <string name="cloud_image">Cloud Photo</string>
     <string name="show_on_map">Show On Map</string>
-    <string name="title_activity_camera">CameraActivity</string>
-	<string name="take_photo">Take Photo</string>
+    <string name="title_activity_camera">Take a New Cloud Photo</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="title_activity_cloud_map">Cloud Sighting Map</string>
+    <string name="new_cloud_sighting">New Cloud Sighting</string>
+
 </resources>

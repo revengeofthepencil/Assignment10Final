@@ -1,4 +1,4 @@
-package com.example.assignment10final;
+package com.myownbadself.assignment10final;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,8 +23,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.assignment10final.util.CloudConstants;
-import com.example.assignment10final.util.PictureUtils;
+import com.example.assignment10final.R;
+import com.myownbadself.assignment10final.util.CloudConstants;
+import com.myownbadself.assignment10final.util.PictureUtils;
 
 @SuppressLint("NewApi")
 public class CameraFragment extends Fragment {

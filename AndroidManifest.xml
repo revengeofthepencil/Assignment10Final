@@ -9,9 +9,13 @@
         android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
         android:name="android.hardware.location.gps"
@@ -23,7 +27,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.assignment10final.CloudListActivity"
+            android:name="com.myownbadself.assignment10final.CloudListActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,13 +44,25 @@
             android:value="AIzaSyATsreN9VWCZQSzc9nG7rQzj7-kVbcms2I" />
 
         <activity
-            android:name="com.example.assignment10final.CloudDetailActivity"
+            android:name="com.myownbadself.assignment10final.CloudDetailActivity"
             android:label="@string/title_activity_cloud_detail" >
         </activity>
         <activity
-            android:name="com.example.assignment10final.CameraActivity"
+            android:name="com.myownbadself.assignment10final.CameraActivity"
             android:label="@string/title_activity_camera" >
         </activity>
+        <activity
+            android:name="com.myownbadself.assignment10final.CloudMapActivity"
+            android:label="@string/title_activity_cloud_map" >
+        </activity>
+        
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyChTsnVoPy6BoU9nRY2zZ-r-y-1urMF4c0" />
+        
     </application>
 
 </manifest>

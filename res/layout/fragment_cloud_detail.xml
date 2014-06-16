@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.assignment10final.CloudDetailActivity$PlaceholderFragment" >
+    tools:context="com.myownbadself.assignment10final.CloudDetailActivity$PlaceholderFragment" >
 
     <LinearLayout
         android:id="@+id/layout_container"

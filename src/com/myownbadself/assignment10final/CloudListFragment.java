@@ -1,4 +1,4 @@
-package com.example.assignment10final;
+package com.myownbadself.assignment10final;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -9,7 +9,6 @@ import java.util.Set;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,12 +24,12 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.assignment10final.model.CloudSighting;
-import com.example.assignment10final.model.CloudSightingCollection;
-import com.example.assignment10final.util.CloudConstants;
-import com.example.assignment10final.util.PictureUtils;
+import com.example.assignment10final.R;
+import com.myownbadself.assignment10final.model.CloudSighting;
+import com.myownbadself.assignment10final.model.CloudSightingCollection;
+import com.myownbadself.assignment10final.util.CloudConstants;
+import com.myownbadself.assignment10final.util.PictureUtils;
 
 public class CloudListFragment extends ListFragment {
 	List<CloudSighting> cloudSightings;
@@ -59,11 +58,24 @@ public class CloudListFragment extends ListFragment {
 		ListView listView = (ListView)view.findViewById(android.R.id.list);
 		registerForContextMenu(listView);
 		initDeleteButton(view);
+		initMapButton(view);
 		return view;
 	}
 
 
-	
+	private void initMapButton(View view) {
+		Button mapButton = (Button) view.findViewById(R.id.button_show_map);
+		mapButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), 
+						CloudMapActivity.class);
+				startActivity(intent);
+			}
+		});
+	}
+
 	private void initDeleteButton(final View view) {
 		Button deleteButton = (Button) view.findViewById(R.id.button_delete_selected);
 		final CloudSightingAdapter adapter = 
@@ -181,12 +193,8 @@ public class CloudListFragment extends ListFragment {
 			TextView sightingInfo = (TextView) convertView
 					.findViewById(R.id.textview_cloud_sighting_loc);
 
-
 			sightingInfo.setText(cloudSighting.
-					getConditionInfo().getLocation()
-					+ ", id = " + cloudSighting.getId());
-					//+ "\nlocation: " + coordString);
-
+					getConditionInfo().getLocation());
 			
 			TextView sightingDate = (TextView) convertView
 					.findViewById(R.id.textview_cloud_sighting_date);

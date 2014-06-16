@@ -1,4 +1,4 @@
-package com.example.assignment10final.model;
+package com.myownbadself.assignment10final.model;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

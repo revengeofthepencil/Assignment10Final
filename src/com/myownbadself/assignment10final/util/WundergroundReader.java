@@ -1,4 +1,4 @@
-package com.example.assignment10final.util;
+package com.myownbadself.assignment10final.util;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.util.Log;
 
-import com.example.assignment10final.model.ConditionInfo;
+import com.myownbadself.assignment10final.model.ConditionInfo;
 
 public class WundergroundReader {
 
