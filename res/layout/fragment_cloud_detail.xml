@@ -8,11 +8,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.myownbadself.assignment10final.CloudDetailActivity$PlaceholderFragment" >
 
-    <LinearLayout
+       <!-- note: I'm setting focusableInTouchMode on this to prevent the
+        edit text from coming up when the activity starts -->
+   	<LinearLayout
         android:id="@+id/layout_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:descendantFocusability="beforeDescendants"
+		android:focusableInTouchMode="true" 
+        >
       
         <TextView
             android:id="@+id/textview_sighting_date"

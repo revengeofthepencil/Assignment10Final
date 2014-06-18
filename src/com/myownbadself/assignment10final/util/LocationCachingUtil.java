@@ -30,7 +30,8 @@ public class LocationCachingUtil  {
 			}
 		}
 		
-		// if we make it here, we either have no cached location or the cache has expired
+		// if we make it here, we either have no cached location or 
+		// the cache has expired
 		return null;
 	}
 	

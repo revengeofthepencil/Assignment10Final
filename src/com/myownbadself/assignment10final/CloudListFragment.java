@@ -1,6 +1,7 @@
 package com.myownbadself.assignment10final;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -34,8 +35,6 @@ import com.myownbadself.assignment10final.util.PictureUtils;
 public class CloudListFragment extends ListFragment {
 	List<CloudSighting> cloudSightings;
 	final Set<Integer> checkedPositions = new HashSet<Integer>();
-	private static final Long MAX_THUMBNAIL_WIDTH = 110L;
-	private static final Long MAX_THUMBNAIL_HEIGHT = 110L;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +43,7 @@ public class CloudListFragment extends ListFragment {
 		
 		cloudSightings = CloudSightingCollection.getInstance(
 				getActivity()).getCloudSightings();
+		Collections.sort(cloudSightings);
 		
 		ArrayAdapter<CloudSighting> adapter = new CloudSightingAdapter(
 				cloudSightings);
@@ -235,15 +235,18 @@ public class CloudListFragment extends ListFragment {
 	private void initSightingImage(View view, CloudSighting cloudSighting) {
 		ImageView imageView = (ImageView) view.findViewById(R.id.imageview_cloud_list_picture);
 
+
+		
 		// use the default image if nothing is set for the current sighting or
 		// if the image fails to load from disk
 		if (cloudSighting.getCloudImage() == null
 				|| PictureUtils.populateImageViewFromFile(getActivity(), 
 						imageView, 
 						cloudSighting.getCloudImage(),
-						MAX_THUMBNAIL_WIDTH,
-						MAX_THUMBNAIL_HEIGHT) == false) {
+						CloudConstants.MAX_THUMBNAIL_WIDTH,
+						CloudConstants.MAX_THUMBNAIL_HEIGHT) == false) {
 			imageView.setImageResource(R.drawable.cloud_default);
+			
 		}
 
 	}

@@ -1,6 +1,5 @@
 package com.myownbadself.assignment10final;
 
-import java.io.File;
 import java.util.Date;
 import java.util.UUID;
 
@@ -224,7 +223,6 @@ public class CloudDetailFragment extends Fragment {
 			Log.i(CloudConstants.LOG_KEY, "adding new sighting for location "
 					+ cloudSighting.getConditionInfo().getLocation());
 			CloudSightingCollection.addCloudSighting(cloudSighting);
-
 			// hold on to the id for another pause
 			id = cloudSighting.getId();
 		}
@@ -277,12 +275,11 @@ public class CloudDetailFragment extends Fragment {
 			// hold up while we wait for updates
 			Log.i(CloudConstants.LOG_KEY, "Waiting for coords in doInBackground");
 			
-			
-			// TODO: this is too damn slow - we need a way to enter coords outside of this screen
+			// grab the lastKnown if we don't have a location 
 			if (this.location == null) {
-				this.location = new Location("");
-				this.location.setLatitude(47.605876);
-				this.location.setLongitude(-122.321718);				
+				Location lastKnown = locationManager.getLastKnownLocation(
+						LocationManager.GPS_PROVIDER);
+				this.location = lastKnown;
 			}
 			
 			// wait for location updates

@@ -1,9 +1,7 @@
 package com.myownbadself.assignment10final.util;
 
 import java.io.File;
-import java.util.Date;
-
-import com.myownbadself.assignment10final.model.CloudSighting;
+import java.io.FileInputStream;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -11,8 +9,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.Display;
-import android.view.View;
 import android.widget.ImageView;
+
+import com.myownbadself.assignment10final.model.CloudSighting;
 
 public class PictureUtils {
 
@@ -152,9 +151,20 @@ public class PictureUtils {
 		}
 	}	
 	
+	public static boolean populateImageViewWithoutScaling(ImageView imageView, 
+			String photoPath) {
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		Bitmap myMap = BitmapFactory.decodeFile(photoPath, options);
+		if (myMap == null) {
+			return false;
+		}
+		imageView.setImageBitmap(myMap);
+		return true;
+	}
 	
-	public static boolean populateImageViewFromFile(Activity activity, ImageView imageView, 
-			String photoPath, Long width, Long height) {
+	public static boolean populateImageViewFromFile(Activity activity, 
+			ImageView imageView, 
+			String photoPath, Integer width, Integer height) {
 		
 		BitmapDrawable bmDrawable = null;
 		
@@ -169,6 +179,7 @@ public class PictureUtils {
 			return false;
 		}
 
+		
 		// check to see if we passed in a width/height or if we should just use
 		// the view extents
 		if (width != null && height != null) {
@@ -178,6 +189,7 @@ public class PictureUtils {
 			bmDrawable = PictureUtils.getScaledDrawable(activity, path);
 			
 		}
+	
 
 		if (bmDrawable == null) {
 			return false;

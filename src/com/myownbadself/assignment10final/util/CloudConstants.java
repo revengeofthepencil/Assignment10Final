@@ -8,12 +8,15 @@ import android.annotation.SuppressLint;
 public class CloudConstants {
 
 	public static final String LOG_KEY = "cloud_log";
+	
 	public static final SimpleDateFormat FORMATTER = 
 			new SimpleDateFormat("MMM d, yyyy hh:mm a");
 	public static final String EXTRA_CLOUD_SIGHTING_ID = "cloud_sighting_id";
 	public static final String EXTRA_NEW_IMAGE_NAME = "new_image_name";
 	public static final String URL_JSON_CONTENT_TYPE = "application/json";
 	public static final int RANDOM_STRING_LENGTH = 24;
+	public static final Integer MAX_THUMBNAIL_WIDTH = 110;
+	public static final Integer MAX_THUMBNAIL_HEIGHT = 110;
 	
 	// JSON keys for serializing records
 	public static final String JSON_CLOUD_ID = "cloud_ID";

@@ -3,13 +3,12 @@ package com.myownbadself.assignment10final.model;
 import java.text.ParseException;
 import java.util.Date;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.myownbadself.assignment10final.util.CloudConstants;
 
-public class CloudSighting {
+public class CloudSighting implements Comparable<CloudSighting> {
 
 	private Date date;
 	private String description;
@@ -163,5 +162,13 @@ public class CloudSighting {
 		return true;
 	}
 
+	@Override
+	public int compareTo(CloudSighting another) {
+		int comp = another.getDate().compareTo(this.date);
+		if (comp == 0) {
+			comp = this.id.compareTo(another.getId());
+		}
+		return comp;
+	}
 	
 }
