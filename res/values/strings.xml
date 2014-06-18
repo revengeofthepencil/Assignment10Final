@@ -17,5 +17,6 @@
     <string name="take_photo">Take Photo</string>
     <string name="title_activity_cloud_map">Cloud Sighting Map</string>
     <string name="new_cloud_sighting">New Cloud Sighting</string>
-
+    <string name="wunderground">Weather data kindly provided by the good people at Weather Underground</string>
+    
 </resources>
