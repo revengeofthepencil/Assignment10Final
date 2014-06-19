@@ -33,10 +33,6 @@ import com.myownbadself.assignment10final.util.WundergroundReader;
 
 public class CloudDetailFragment extends Fragment {
 
-	// NOLA: 29.917758,-90.113994
-	// Seattle: 47.605876, -122.321718
-	// San Francisco: 37.764207, -122.469143
-
 	private CloudSighting cloudSighting;
 	private ConditionInfo conditionInfo;
 	private String id;
