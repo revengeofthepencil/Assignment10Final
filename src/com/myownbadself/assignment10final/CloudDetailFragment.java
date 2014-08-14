@@ -278,6 +278,12 @@ public class CloudDetailFragment extends Fragment {
 				this.location = lastKnown;
 			}
 			
+			if (this.location == null) {
+				this.location = new Location("");
+				this.location.setLatitude(47.615597);
+				this.location.setLongitude(-122.321622);
+			}
+			
 			// wait for location updates
 			while(this.location == null) {
 			}

@@ -9,12 +9,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.Size;
-import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -117,7 +114,6 @@ public class CameraFragment extends Fragment {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
@@ -143,6 +139,7 @@ public class CameraFragment extends Fragment {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private void initSurfaceView(View view) {
 		surfaceView = (SurfaceView) view.findViewById(R.id.camera_surface_view);
 		SurfaceHolder holder = surfaceView.getHolder();

@@ -1,7 +1,6 @@
 package com.myownbadself.assignment10final.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -19,8 +18,6 @@ public class PictureUtils {
 	@SuppressWarnings("deprecation")
 	public static BitmapDrawable getScaledDrawable(Activity a, String path) {
 		Display display = a.getWindowManager().getDefaultDisplay();
-		// we want to reduce the image size just a bit so it doesn't blow out
-		// the display
 		float destWidth = (float) (display.getWidth());
 		float destHeight = (float) (display.getHeight());
 		return getScaledDrawable(a, destWidth, destHeight, path);
@@ -63,63 +60,10 @@ public class PictureUtils {
 		return new BitmapDrawable(a.getResources(), scaled);
 
 	}
-
-	@SuppressWarnings("deprecation")
-	public static BitmapDrawable getScaledDrawable_bak(Activity a, String path)
-	{
-		Display display = a.getWindowManager().getDefaultDisplay();
-		
-		// we want to reduce the image size just a bit so it doesn't blow out
-		// the display
-		float destWidth = (float) (display.getWidth());
-		float destHeight = (float) (display.getHeight());
-		
-
-		//read in the dimensions of the image on disk
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-
-		Bitmap mapOrig = BitmapFactory.decodeFile(path, options);
-		
-		float srcWidth = options.outWidth;
-		float srcHeight = options.outHeight;
-
-		float heightDiff = srcHeight - destHeight;
-		float widthDiff = srcWidth - destWidth;
-		double reducePercent = 0.0;
-		if (heightDiff > widthDiff && heightDiff > 0) {
-			reducePercent = heightDiff / srcHeight;
-		} else if (widthDiff > 0) {
-			reducePercent = heightDiff / srcHeight;
-		}
-		
-		int inSampleSize = 1;
-		if(srcHeight > destHeight || srcWidth > destWidth)
-		{
-			if(srcWidth > srcHeight)
-			{
-				inSampleSize = Math.round(srcHeight/destHeight);
-			}
-			else
-			{
-				inSampleSize = Math.round(srcWidth / destWidth); 
-			}
-		}
-		
-		
-		options = new BitmapFactory.Options();
-		options.inSampleSize = inSampleSize;
-		
-		Bitmap bitmap = BitmapFactory.decodeFile(path, options);
-		return new BitmapDrawable(a.getResources(), bitmap);
-
-	}
 	
 	
-	public static void cleanImageView(ImageView imageView)
-	{
+	public static void cleanImageView(ImageView imageView) {
 		if(!(imageView.getDrawable()instanceof BitmapDrawable)) return;
-		
 		//cleanup the views image for the sake of memory
 		BitmapDrawable b = (BitmapDrawable)imageView.getDrawable();
 		b.getBitmap().recycle();
